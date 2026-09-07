@@ -152,7 +152,8 @@ function startStudy(id){
   document.documentElement.style.setProperty('--accent-light',cDoc.groupLight||'#f3f4f6');
   ['all','review','known'].forEach(function(x){document.getElementById('filter-'+x).classList.toggle('active',x==='all');});
   showScr('study');
-  document.getElementById('header-sub').textContent=cDoc.group+' > '+cDoc.shortTitle;
+  document.getElementById('header-sub').textContent=cDoc.group+' › '+cDoc.shortTitle;
+  rc();
 }
 
 function bcc(){
