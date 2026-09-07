@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flashcard Vikki Bank - QL&amp;HTTD - Di Mai</title>
+<title>Flashcard Vikki Bank - QL&amp;HTTD - Dì Mai</title>
 <style>
 :root{--accent:#2563eb;--accent-light:#dbeafe}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -66,14 +66,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;min-height:100vh
 
 <div class="header">
   <h1>&#128218; Flashcard Vikki Bank &#8212; QL&amp;HTTD</h1>
-  <p id="header-sub">Chon tai lieu de bat dau hoc</p>
+  <p id="header-sub">Chọn tài liệu để bắt đầu học</p>
 </div>
 <div id="screen-home" class="screen active">
   <div class="home-content">
     <div class="home-stats">
-      <div><div class="stat-val" id="stat-docs">0</div><div class="stat-lbl">Tai lieu</div></div>
+      <div><div class="stat-val" id="stat-docs">0</div><div class="stat-lbl">Tài liệu</div></div>
       <div><div class="stat-val" id="stat-cards">0</div><div class="stat-lbl">Flashcard</div></div>
-      <div><div class="stat-val" id="stat-done">0%</div><div class="stat-lbl">Da nho</div></div>
+      <div><div class="stat-val" id="stat-done">0%</div><div class="stat-lbl">Đã nhớ</div></div>
     </div>
     <div id="groups-container"></div>
   </div>
@@ -87,20 +87,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;min-height:100vh
     </div>
   </div>
   <div class="study-controls">
-    <button class="btn-sm active" id="filter-all">Tat ca</button>
-    <button class="btn-sm" id="filter-review">&#9201; Can on lai</button>
-    <button class="btn-sm" id="filter-known">&#9989; Da nho</button>
-    <button class="btn-sm" id="btn-shuffle">Xao bai</button>
+    <button class="btn-sm active" id="filter-all">Tất cả</button>
+    <button class="btn-sm" id="filter-review">⏰ Cần ôn lại</button>
+    <button class="btn-sm" id="filter-known">✅ Đã nhớ</button>
+    <button class="btn-sm" id="btn-shuffle">Xáo bài</button>
     <div class="card-counter" id="card-counter">0/0</div>
   </div>
   <div class="study-area">
     <div id="study-main"></div>
     <div class="shortcuts">
-      <span class="kbd">Space</span> lat the &nbsp;
-      <span class="kbd">&larr;&rarr;</span> truoc/sau &nbsp;
-      <span class="kbd">G</span> da nho &nbsp;
-      <span class="kbd">F</span> chua nho &nbsp;
-      <span class="kbd">Esc</span> ve trang chu
+      <span class="kbd">Space</span> lật thẻ &nbsp;
+      <span class="kbd">&larr;&rarr;</span> trước/sau &nbsp;
+      <span class="kbd">G</span> đã nhớ &nbsp;
+      <span class="kbd">F</span> chưa nhớ &nbsp;
+      <span class="kbd">Esc</span> về trang chủ
     </div>
   </div>
 </div>
@@ -132,7 +132,7 @@ function buildHome(){
     h+='<div class="group-section"><div class="group-title" style="background:'+g.color+'">'+gn+'</div><div class="doc-list">';
     g.docs.forEach(function(d){
       var p=gdp(d),pct=Math.round(p.known/p.total*100);
-      h+='<div class="doc-item" data-id="'+d.id+'"><span class="doc-code" style="background:'+g.light+';color:'+g.color+'">'+d.docCode+'</span><div class="doc-info"><div class="doc-title">'+d.shortTitle+'</div><div class="doc-meta">'+p.total+' the &bull; '+p.known+' da nho</div></div><div class="doc-progress"><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+g.color+'"></div></div><div class="prog-text">'+pct+'%</div></div><span class="doc-arrow">&#8250;</span></div>';
+      h+='<div class="doc-item" data-id="'+d.id+'"><span class="doc-code" style="background:'+g.light+';color:'+g.color+'">'+d.docCode+'</span><div class="doc-info"><div class="doc-title">'+d.shortTitle+'</div><div class="doc-meta">'+p.total+' thẻ &bull; '+p.known+' da nho</div></div><div class="doc-progress"><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+g.color+'"></div></div><div class="prog-text">'+pct+'%</div></div><span class="doc-arrow">&#8250;</span></div>';
     });
     h+='</div></div>';
   });
@@ -175,23 +175,23 @@ function shuffle(){
 function rc(){
   var a=document.getElementById('study-main');
   if(!cCards.length){
-    a.innerHTML='<div class="done-banner"><div class="emoji">&#10024;</div><h2>Khong co the nao!</h2><p>Hay thay doi bo loc.</p><button class="btn-restart" id="brst">Xem tat ca</button></div>';
+    a.innerHTML='<div class="done-banner"><div class="emoji">&#10024;</div><h2>Không có thẻ nào!</h2><p>Hãy thay đổi bộ lọc.</p><button class="btn-restart" id="brst">Xem tất cả</button></div>';
     document.getElementById('card-counter').textContent='0/0';
     var brst=document.getElementById('brst');if(brst)brst.addEventListener('click',function(){setFilter('all');});
     return;
   }
   var c=cCards[cIdx],st=gcs(cDoc.id,c.idx);
-  var sb=st==='known'?'&#9989; Da nho':st==='review'?'&#9201; Can on lai':'Moi';
+  var sb=st==='known'?'✅ Đã nhớ':st==='review'?'⏰ Cần ôn lại':'Mới';
   document.getElementById('card-counter').textContent=(cIdx+1)+'/'+cCards.length;
   var bt=(c.back||'').replace(/\n/g,'<br>');
   a.innerHTML=
     '<div style="text-align:center;margin-bottom:7px;font-size:.74rem;color:#6b7280">'+sb+'</div>'+
     '<div class="card-wrapper" id="cwrap"><div class="card-inner'+(cFlip?' flipped':'')+'" id="cinn">'+
-    '<div class="card-face card-front"><div class="card-label">CAU HOI</div><div class="card-text">'+c.front+'</div><div class="card-hint">Nhan de xem dap an</div></div>'+
-    '<div class="card-face card-back"><div class="card-label">DAP AN</div><div class="card-text">'+bt+'</div></div>'+
+    '<div class="card-face card-front"><div class="card-label">CÂU HỎI</div><div class="card-text">'+c.front+'</div><div class="card-hint">Nhấn để xem đáp án</div></div>'+
+    '<div class="card-face card-back"><div class="card-label">ĐÁP ÁN</div><div class="card-text">'+bt+'</div></div>'+
     '</div></div>'+
-    '<div class="action-row"><button class="btn-action btn-forgot" id="bfg">&#128517; Chua nho</button><button class="btn-action btn-knew" id="bkn">&#9989; Da nho!</button></div>'+
-    '<div class="nav-row"><button class="btn-nav" id="bpv" '+(cIdx===0?'disabled':'')+'>&#8592; Truoc</button><button class="btn-nav" id="bnx" '+(cIdx===cCards.length-1?'disabled':'')+'>Tiep &#8594;</button></div>';
+    '<div class="action-row"><button class="btn-action btn-forgot" id="bfg">😅 Chưa nhớ</button><button class="btn-action btn-knew" id="bkn">✅ Đã nhớ!</button></div>'+
+    '<div class="nav-row"><button class="btn-nav" id="bpv" '+(cIdx===0?'disabled':'')+'>← Trước</button><button class="btn-nav" id="bnx" '+(cIdx===cCards.length-1?'disabled':'')+'>Tiếp →</button></div>';
   document.getElementById('cwrap').addEventListener('click',flip);
   document.getElementById('bfg').addEventListener('click',function(){mk('review');});
   document.getElementById('bkn').addEventListener('click',function(){mk('known');});
@@ -210,7 +210,7 @@ function mk(st){
   var el=document.getElementById('stat-done');if(el)el.textContent=Math.round(tk/tc*100)+'%';
 }
 
-function goHome(){showScr('home');buildHome();document.getElementById('header-sub').textContent='Chon tai lieu de bat dau hoc';}
+function goHome(){showScr('home');buildHome();document.getElementById('header-sub').textContent='Chọn tài liệu để bắt đầu học';}
 function showScr(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById('screen-'+id).classList.add('active');}
 document.getElementById('btn-back-top').addEventListener('click',goHome);
 document.getElementById('filter-all').addEventListener('click',function(){setFilter('all');});
